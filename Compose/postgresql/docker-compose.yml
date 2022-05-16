@@ -1,0 +1,27 @@
+version: '3.1'
+
+services:
+
+  db:
+    image: postgres:14
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: test_db
+      PGHOST: 127.0.0.1
+      PGDATA: "/var/lib/postgresql/data/pgdata"
+    ports:
+      - "5432:5432"
+    volumes:
+# Если будем хранить в Docker volumes
+      - postgresql-data:/var/lib/postgresql/data
+      - postgresql-init:/docker-entrypoint-initdb.d
+# Если будем хранить на диске
+#      - ./init:/docker-entrypoint-initdb.d
+#      - ./data:/var/lib/postgresql/data
+
+# Имя volume
+volumes:
+  postgresql-data:
+  postgresql-init:
